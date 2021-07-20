@@ -17,6 +17,7 @@ public class RedisTimeSeries implements AutoCloseable {
   private static final byte[] STAR = SafeEncoder.encode("*");
 
   private final Pool<Jedis> pool;
+  private Jedis jedis;
 
   /** Create a new RedisTimeSeries client with default connection to local host */
   public RedisTimeSeries() {
@@ -60,6 +61,11 @@ public class RedisTimeSeries implements AutoCloseable {
 
   public RedisTimeSeries(Pool<Jedis> pool) {
     this.pool = pool;
+  }
+  
+  public RedisTimeSeries(Jedis jedis) {
+    this.jedis = jedis;
+    this.pool = null;
   }
 
   /**
@@ -1061,7 +1067,7 @@ public class RedisTimeSeries implements AutoCloseable {
   }
 
   private Jedis getConnection() {
-    return pool.getResource();
+    return jedis != null ? jedis : pool.getResource();
   }
 
   private BinaryClient sendCommand(Jedis conn, Command command, byte[]... args) {
