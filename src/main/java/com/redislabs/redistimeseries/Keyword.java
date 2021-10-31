@@ -11,11 +11,17 @@ public enum Keyword implements ProtocolCommand {
   RETENTION,
   TIMESTAMP,
   WITHLABELS,
+  SELECTED_LABELS,
   COUNT,
   UNCOMPRESSED,
   CHUNK_SIZE,
   DUPLICATE_POLICY,
-  ON_DUPLICATE;
+  ON_DUPLICATE,
+  ALIGN,
+  FILTER_BY_TS,
+  FILTER_BY_VALUE,
+  GROUPBY,
+  REDUCE;
 
   private final byte[] raw;
 
